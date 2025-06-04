@@ -57,7 +57,7 @@ Remember: to have results pulling documents from zenodo, they first need to be p
 
 # Result
 The shortcode will create one card for each record yielded from the query like this:
-<p align="center"><img src="docs/result.png" alt="card_result" width="250"/></p>
+<p align="center"><img src="docs/result.png" alt="card_result" width="75%"/></p>
 creating a thumbnail of the PDF, title, a intro of the description, how many downloads and how many views, with the &#128175; tag for each 100 views, when was published (P) and when was updated (U) with a new version.
 
 ## What it does on the back-end
