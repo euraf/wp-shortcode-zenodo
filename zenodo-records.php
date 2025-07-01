@@ -55,7 +55,7 @@ function zenodo_records_shortcode($atts) {
     foreach ($data['hits']['hits'] as $record) {
         $title = $record['metadata']['title'] ?? 'No title';
         $raw_description = $record['metadata']['description'] ?? 'No description';
-        $description = wp_kses_post(wp_trim_words(strip_tags($raw_description), 50, '...'));
+        $description = esc_html(wp_kses_post(wp_trim_words(strip_tags($raw_description), 50, '...')));
         //$description = substr($record['metadata']['description'] ?? 'No description', 0, 300) . '...';
         $url = $record['doi_url'] ?? '#';
         $download_count = $record['stats']['unique_downloads'] ?? 0;
