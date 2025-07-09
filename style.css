@@ -30,11 +30,11 @@
     position: relative; /* Ensure the card container has a relative position for absolute positioning inside */
     padding-bottom: 40px; /* Add some padding to prevent overlap with content */
     
-    border: 2px solid #4CAF50; /* Green border */
+    /* border: 2px solid #4CAF50; Green border This is now controlled by the shortcode*/
     border-radius: 10px; /* Rounded corners */
     padding: 20px;
     margin-bottom: 20px; /* Add space between cards */
-    background-color: #f9fff9; /* Light green background */
+    /* background-color: #f9fff9; Light green background This is now controlled by the shortcode*/
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
 }
 
@@ -54,7 +54,7 @@
 /* Style for the 'Read more...' link */
 .zenodo-record-link {
     display: inline-block;
-    background-color: #008b00; /* Default WordPress button color */
+    /* background-color: #008b00; button color This is now controlled by the shortcode*/
     color: #ffffff; /* White text */
     padding: 10px 20px;
     border-radius: 5px;
@@ -64,8 +64,12 @@
 }
 
 .zenodo-record-link:hover {
-    background-color: #025602; /* Darken on hover */
-    color: #ffffff;
+    /* Dynamic now independent of the color chosen */
+    filter: saturate(80%) contrast(120%);
+    transform: scale(1.015);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    z-index: 1;
+    transition: filter 0.3s ease;
 }
 
 .zenodo-record-link i {
@@ -82,4 +86,8 @@
     background-color: rgba(255, 255, 255, 0.8); /* Slight background for visibility */
     padding: 5px;
     border-radius: 3px;
+}
+#totals {
+    bottom: 3px;
+    font-size: 10px;
 }
