@@ -40,6 +40,10 @@ To list items from zenodo that are deliverables from the project, e.g. "DIGITAF"
 ```
 [zenodo_records query='grants.acronym:DIGITAF AND resource_type.subtype:publication-deliverable']
 ```
+<span style="background-color: green">[UPDATE July 2025]</span> - you can now add arguments to control the colors:
+```
+[zenodo_records query='grants.acronym:DIGITAF AND resource_type.subtype:publication-deliverable' border_color='#4CAF50' background='#f9fff9' button_color='#008b00']
+```
 you can use this shortcode to retrieve exactly the same results:
 ```
 [zenodo_records query='grants.code:101059794 AND resource_type.subtype:publication-deliverable']
@@ -57,7 +61,7 @@ Remember: to have results pulling documents from zenodo, they first need to be p
 
 # Result
 The shortcode will create one card for each record yielded from the query like this:
-<p align="center"><img src="docs/result.png" alt="card_result" width="75%"/></p>
+<p align="center"><img src="docs/result.png" alt="card_result" width="250"/></p>
 creating a thumbnail of the PDF, title, a intro of the description, how many downloads and how many views, with the &#128175; tag for each 100 views, when was published (P) and when was updated (U) with a new version.
 
 ## What it does on the back-end
@@ -76,7 +80,8 @@ but with a different style &#x1F60A;
 
 
 ## Styling
-- Edit the style.css to your needs (Comments were added to ease the job). It is suggested to create a copy of the file and name it "style_original.css" and edit the style.css to your needs (e.g. to match the desing of your website). If you want to create your own css filen name, e.g. myownstyle.css, make sure to replace the following piece of code in the ```zenodo-records.php``` file:
+- <span style="background-color: green">[UPDATE July 2025]</span>. You can now minimize the edit od the CSS. You can now control the 1) Border color, 2) The card background color, 3) the button color. See the [examples below](#examples)
+- Edit the style.css to your needs (Comments were added to ease the job). It is suggested to create a copy of the file and name it "style_original.css" and edit the style.css to your needs (e.g. to match the design of your website). If you want to create your own css filen name, e.g. myownstyle.css, make sure to replace the following piece of code in the ```zenodo-records.php``` file:
  
 ```php
 wp_enqueue_style('zenodo-records-style', plugins_url('style.css', __FILE__));
@@ -91,13 +96,13 @@ function zenodo_records_shortcode($atts)
 ```
 Feel free to change and send us your examples. We will be glad to hear you are engaging with the FAIR principles.
 
-# Examples
+# [Examples](#examples)
 - Project deliverables of the project DigitAF: https://digitaf.eu/reports-on-deliverables/ using the shorcode:
-```
-[zenodo_records query='grants.acronym:DIGITAF AND resource_type.subtype:publication-deliverable']
-```
-- Agroforestry policy briefings published by EURAF during the DigitAF project: https://digitaf.eu/policy-briefings/ using the shortcode
-```
-[zenodo_records query='grants.acronym:DIGITAF AND resource_type.subtype:publication-workingpaper']
-```
-&#xF756;
+
+[zenodo_records query='grants.acronym:DIGITAF AND resource_type.subtype:publication-deliverable' <span style="background-color: green"> border_color='#4CAF50' background='#f9fff9' button_color='#008b00'</span>]
+
+- Agroforestry policy briefings published by EURAF during the DigitAF project: https://digitaf.eu/policy-briefings/ using the shortcode:
+
+[zenodo_records query='grants.acronym:DIGITAF AND resource_type.subtype:publication-workingpaper' <span style="background-color: green">border_color='#4CAF50' background='#f9fff9' button_color='#008b00'</span>]
+
+**Note:** <span style="background-color: green">[UPDATE July 2025]</span> You can now control the colors of the cards in the shorcode. No need to edit the CSS, unless you want to change the card apperance dramatically. You can use HEX (e.g. '#FFFFFF') or Color Names (e.g. 'black')
