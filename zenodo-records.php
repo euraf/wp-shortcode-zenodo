@@ -10,6 +10,10 @@ if (!defined('ABSPATH')) {
     exit; // Prevent direct access
 }
 
+function is_valid_css_named_or_hex_color($color) {
+    return preg_match('/^#(?:[0-9a-fA-F]{3}){1,2}$/', $color) || preg_match('/^[a-zA-Z]+$/', $color);
+}
+
 
 // Shortcode function to fetch and display Zenodo records
 function zenodo_records_shortcode($atts) {
@@ -21,6 +25,9 @@ function zenodo_records_shortcode($atts) {
             'query' => 'euraf&sort=mostviewed', // Default query for most viewed of the European Agroforestry federation 
             // you can use the grants.code field, e.g.
             // 'query' => 'grants.code:101059794 AND resource_type.type:publication"', // Default query
+            'border_color'  => '#4CAF50',       // Default boder color (DigitAF color)
+            'background'    => '#f9fff9',       // Default background color (Light green)
+            'button_color'  => '#008b00',    // Default button/link color (DigitAF color)
             
         ),
         $atts,
@@ -49,17 +56,32 @@ function zenodo_records_shortcode($atts) {
     if (json_last_error() !== JSON_ERROR_NONE || !isset($data['hits']['hits'])) {
         return '<p>No records found for this query.</p>';
     }
-    #var_dump($data);
-    $output = '<div class="zenodo-records-container">';
+    
+    //comes from shortcode attributes
+    $border_color_raw  = $atts['border_color'];
+    $background_raw    = $atts['background'];
+    $button_color_raw  = $atts['button_color'];
+
+    $border_color = is_valid_css_named_or_hex_color($border_color_raw) ? esc_attr($border_color_raw) : '#4CAF50';
+    $background   = is_valid_css_named_or_hex_color($background_raw) ? esc_attr($background_raw) : '#f9fff9';
+    $button_color = is_valid_css_named_or_hex_color($button_color_raw) ? esc_attr($button_color_raw) : '#008b00';
+
+    // counter for the summary card
+    $n_views=0;
+    $n_downloads=0;
+    $output_ini = '<div class="zenodo-records-container">'; 
+    $output="";
 
     foreach ($data['hits']['hits'] as $record) {
         $title = $record['metadata']['title'] ?? 'No title';
         $raw_description = $record['metadata']['description'] ?? 'No description';
-        $description = esc_html(wp_kses_post(wp_trim_words(strip_tags($raw_description), 50, '...')));
+        $description = wp_kses_post(wp_trim_words(strip_tags($raw_description), 50, '...'));
         //$description = substr($record['metadata']['description'] ?? 'No description', 0, 300) . '...';
         $url = $record['doi_url'] ?? '#';
         $download_count = $record['stats']['unique_downloads'] ?? 0;
         $view_count = $record['stats']['unique_views'] ?? 0;
+        $n_views=$n_views+intval($view_count);
+        $n_downloads=$n_downloads + intval($download_count);
         $record_id = $record['id'] ?? '#';
         $pdf_filename = esc_url($record['files'][0]['key']) ?? 0;
         $first_published_timestamp = $record['metadata']['publication_date'] ?? '#';
@@ -90,7 +112,8 @@ function zenodo_records_shortcode($atts) {
         }
 
         // Create card HTML
-        $output .= '<div class="zenodo-record-card">';
+        // $output .= '<div class="zenodo-record-card">';
+        $output .= '<div class="zenodo-record-card" style="border: 2px solid ' . esc_attr($border_color) . '; background-color: ' . esc_attr($background) . ';">';
         $output .= '<div class="zenodo-record-title-thumbnail">';
         if (!empty($thumbnail_html)) {
             // Add thumbnail (if it exists)
@@ -110,7 +133,8 @@ function zenodo_records_shortcode($atts) {
         $output .= '</div>'; // Close description section
 
         // Read more link with download and view count
-        $output .= '<a href="' . esc_url($url) . '" target="_blank" class="zenodo-record-link">Read more... ';
+        // $output .= '<a href="' . esc_url($url) . '" target="_blank" class="zenodo-record-link">Read more... ';
+        $output .= '<a href="' . esc_url($url) . '" target="_blank" class="zenodo-record-link" style="background-color: ' . esc_attr($button_color) . '; font-weight: bold;">Read more... ';
         $output .= '<i class="fas fa-download" title="Downloads"></i> ' . $download_count . ' ';
         $output .= '<i class="fas fa-eye" title="Views"></i> ' . $view_count;
 
@@ -135,7 +159,11 @@ function zenodo_records_shortcode($atts) {
     }
 
     $output .= '</div>';
-    return $output;
+    $totals_card = '<div class="zenodo-record-card" style="border: 2px solid ' . esc_attr($border_color) . '; background-color: ' . esc_attr($background) . ';">';
+    $totals_card .= '<span id="totals">Resume of the below (total views: <b>'.$n_views.'</b>, total downloads: <b>'.$n_downloads.'</b>). ';
+    $totals_card .= '<p>Source: <a target="_blank" href="'.$api_url.'">zenodo API url</a>. (Promote the <a href="https://www.go-fair.org/fair-principles/" target="_blank">FAIR principles</a> - know more about having your documents in your website <a href="https://github.com/euraf/wp-shortcode-zenodo/blob/main/README.md" target="_blank">here</a>)</p></span>';
+    $totals_card .= '</div>';
+    return $output_ini.$totals_card.$output;
 }
 
 // Register the shortcode
