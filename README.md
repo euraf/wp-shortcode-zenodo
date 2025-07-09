@@ -80,7 +80,7 @@ but with a different style &#x1F60A;
 
 
 ## Styling
-- <span style="background-color: green">[UPDATE July 2025]</span>. You can now minimize the edit od the CSS. You can now control the 1) Border color, 2) The card background color, 3) the button color. See the [examples below](#examples)
+&#127817;[UPDATE July 2025]&#127817;</span>. You can now minimize the edit od the CSS. You can now control the 1) Border color, 2) The card background color, 3) the button color. See the [examples below](#examples)
 - Edit the style.css to your needs (Comments were added to ease the job). It is suggested to create a copy of the file and name it "style_original.css" and edit the style.css to your needs (e.g. to match the design of your website). If you want to create your own css filen name, e.g. myownstyle.css, make sure to replace the following piece of code in the ```zenodo-records.php``` file:
  
 ```php
@@ -99,10 +99,13 @@ Feel free to change and send us your examples. We will be glad to hear you are e
 # [Examples](#examples)
 - Project deliverables of the project DigitAF: https://digitaf.eu/reports-on-deliverables/ using the shorcode:
 
-[zenodo_records query='grants.acronym:DIGITAF AND resource_type.subtype:publication-deliverable' <span style="background-color: green"> border_color='#4CAF50' background='#f9fff9' button_color='#008b00'</span>]
+&#127817;[UPDATE Jul 2025]&#127817;
+```
+[zenodo_records query='grants.acronym:DIGITAF AND resource_type.subtype:publication-deliverable'  border_color='#4CAF50' background='#f9fff9' button_color='#008b00']
+```
 
 - Agroforestry policy briefings published by EURAF during the DigitAF project: https://digitaf.eu/policy-briefings/ using the shortcode:
 
-[zenodo_records query='grants.acronym:DIGITAF AND resource_type.subtype:publication-workingpaper' <span style="background-color: green">border_color='#4CAF50' background='#f9fff9' button_color='#008b00'</span>]
+[zenodo_records query='grants.acronym:DIGITAF AND resource_type.subtype:publication-workingpaper' border_color='#4CAF50' background='#f9fff9' button_color='#008b00']
 
-**Note:** <span style="background-color: green">[UPDATE July 2025]</span> You can now control the colors of the cards in the shorcode. No need to edit the CSS, unless you want to change the card apperance dramatically. You can use HEX (e.g. '#FFFFFF') or Color Names (e.g. 'black')
+ **Note:** [&#127817;UPDATE July 2025 &#127817;]</span> You can now control the colors of the cards in the shorcode. No need to edit the CSS, unless you want to change the card apperance dramatically. You can use HEX (e.g. '#FFFFFF') or Color Names (e.g. 'black')
